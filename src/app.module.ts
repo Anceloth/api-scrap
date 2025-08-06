@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import databaseConfig from './infrastructure/config/database.config';
 import appConfig from './infrastructure/config/app.config';
 import { HealthModule } from './infrastructure/modules/health.module';
+import { UserModule } from './infrastructure/modules/user.module';
 import { User } from './infrastructure/database/models/user.model';
 
 @Module({
@@ -33,6 +34,7 @@ import { User } from './infrastructure/database/models/user.model';
 
     // Application modules
     HealthModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
