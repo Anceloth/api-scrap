@@ -4,6 +4,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import databaseConfig from './infrastructure/config/database.config';
 import appConfig from './infrastructure/config/app.config';
 import { HealthModule } from './infrastructure/modules/health.module';
+import { User } from './infrastructure/database/models/user.model';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { HealthModule } from './infrastructure/modules/health.module';
         synchronize: process.env.NODE_ENV === 'development',
         logging: process.env.NODE_ENV === 'development',
         autoLoadModels: true,
-        models: [], // Models will be added here when we create them
+        models: [User], // Models will be added here when we create them
       }),
     }),
 

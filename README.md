@@ -1,118 +1,328 @@
-# Base API - NestJS with Hexagonal Architecture
+<div align="center">
 
-## Description
+# 🚀 Base API - NestJS Hexagonal Architecture
 
-Base API built with NestJS, TypeScript, PostgreSQL and Sequelize, following hexagonal architecture principles (ports and adapters).
+<img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
+<img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+<img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
 
-## Features
+**🏗️ Enterprise-grade API built with modern architecture patterns**
 
-- ✅ **NestJS** - Node.js framework for building scalable applications
-- ✅ **TypeScript** - Static typing for JavaScript
-- ✅ **PostgreSQL** - Relational database
-- ✅ **Sequelize** - ORM for Node.js
+[Features](#-features) • [Quick Start](#-quick-start) • [Architecture](#-architecture) • [Documentation](#-documentation)
+
+---
+
+</div>
+
+## 📖 Description
+
+A production-ready **REST API** foundation built with **NestJS**, **TypeScript**, and **PostgreSQL**. 
+Following **Hexagonal Architecture** principles for maximum maintainability, testability, and scalability.
+
+Perfect starting point for enterprise applications requiring clean architecture and modern development practices.
+
+## ✨ Features
+
+<table>
+<tr>
+<td>
+
+**🏛️ Architecture**
+- ✅ Hexagonal Architecture
+- ✅ Clean Code Principles  
+- ✅ SOLID Principles
+- ✅ Dependency Injection
+
+</td>
+<td>
+
+**🛠️ Technology Stack**
+- ✅ **NestJS** - Scalable Node.js framework
+- ✅ **TypeScript** - Static typing
+- ✅ **PostgreSQL** - Robust database
+- ✅ **Sequelize** - Powerful ORM
+
+</td>
+</tr>
+<tr>
+<td>
+
+**🐳 DevOps & Tools**
 - ✅ **Docker Compose** - Container orchestration
-- ✅ **Hexagonal Architecture** - Clear separation of concerns
-- ✅ **Environment Variables** - Flexible configuration
-- ✅ **Health Check** - Application health endpoint
+- ✅ **Hot Reload** - Fast development
+- ✅ **ESLint & Prettier** - Code quality
+- ✅ **Jest** - Testing framework
 
-## Project Structure
+</td>
+<td>
+
+**🔒 Production Ready**
+- ✅ **Environment Variables** - Flexible config
+- ✅ **Health Checks** - Monitor endpoints
+- ✅ **Database Migrations** - Schema management
+- ✅ **Sample Data** - Ready to test
+
+</td>
+</tr>
+</table>
+
+## 🏗️ Project Structure
 
 ```
-src/
-├── application/           # Application Layer
-│   ├── ports/            # Ports (interfaces)
-│   └── use-cases/        # Use cases
-├── domain/               # Domain Layer
-│   ├── entities/         # Domain entities
-│   ├── repositories/     # Repository interfaces
-│   └── value-objects/    # Value objects
-├── infrastructure/       # Infrastructure Layer
-│   ├── adapters/         # Adapters
-│   │   ├── controllers/  # REST controllers
-│   │   └── repositories/ # Repository implementations
-│   ├── database/         # Database configuration
-│   │   ├── models/       # Sequelize models
-│   │   └── migrations/   # Migrations
-│   ├── config/           # Configurations
-│   └── modules/          # NestJS modules
-└── shared/               # Shared code
-    ├── common/           # Common utilities
-    └── interfaces/       # Shared interfaces
+📁 src/
+├── 🎯 application/           # Application Layer
+│   ├── 🔌 ports/            # Ports (interfaces)
+│   └── 🎭 use-cases/        # Use cases
+├── 💎 domain/               # Domain Layer
+│   ├── 🏛️ entities/         # Domain entities
+│   ├── 📦 repositories/     # Repository interfaces
+│   └── 💰 value-objects/    # Value objects
+├── 🔧 infrastructure/       # Infrastructure Layer
+│   ├── 🔀 adapters/         # Adapters
+│   │   ├── 🎮 controllers/  # REST controllers
+│   │   └── 💾 repositories/ # Repository implementations
+│   ├── 🗄️ database/         # Database configuration
+│   │   ├── 📋 models/       # Sequelize models
+│   │   └── 🔄 migrations/   # Migrations
+│   ├── ⚙️ config/           # Configurations
+│   └── 📦 modules/          # NestJS modules
+└── 🤝 shared/               # Shared code
+    ├── 🛠️ common/           # Common utilities
+    └── 🔗 interfaces/       # Shared interfaces
 ```
 
-## Installation
+## 🚀 Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone <repo-url>
-   cd base_api
-   ```
+### 1️⃣ Clone & Install
+```bash
+git clone <repo-url>
+cd base_api
+npm install
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### 2️⃣ Environment Setup
+```bash
+cp .env.example .env
+# Edit .env with your configurations
+```
 
-3. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   # Edit .env with your configurations
-   ```
-
-4. **Start the database with Docker**
-   ```bash
-   docker compose up -d postgres
-   ```
-
-5. **Run the application**
-   ```bash
-   # Development
-   npm run start:dev
-   
-   # Production
-   npm run build
-   npm run start:prod
-   ```
-
-## Available Scripts
-
-- `npm run build` - Build the application
-- `npm run start` - Run in production mode
-- `npm run start:dev` - Run in development mode with hot-reload
-- `npm run start:debug` - Run in debug mode
-- `npm run lint` - Code linter
-- `npm run test` - Run tests
-- `npm run test:watch` - Run tests in watch mode
-- `npm run test:cov` - Run tests with coverage
-
-## Docker
-
-### Start PostgreSQL
+### 3️⃣ Start Database
 ```bash
 docker compose up -d postgres
 ```
 
-## Endpoints
+### 4️⃣ Database Setup
+```bash
+# Run migrations to create tables
+npm run migration:run
 
-### Health Check
-- `GET /health` - General application status
-- `GET /health/ping` - Simple ping
+# Run seeders to insert sample data  
+npm run seed:run
+```
 
-## Hexagonal Architecture
+### 5️⃣ Launch Application
+```bash
+# Development mode with hot-reload
+npm run start:dev
 
-This application follows hexagonal architecture principles:
+# Production mode
+npm run build && npm run start:prod
+```
 
-### Domain (Center)
-- **Entities**: Business objects with identity
-- **Value Objects**: Immutable objects without identity
-- **Repositories**: Interfaces for persistence
+> 🎉 **That's it!** Your API is running at `http://localhost:3000`
 
-### Application
-- **Use Cases**: Application logic
-- **Ports**: Interfaces that define contracts
+---
 
-### Infrastructure (External)
-- **Adapters**: Concrete implementations
+## ⚡ Quick Database Setup
+
+<div align="center">
+
+| Command | Description |
+|---------|-------------|
+| `npm run migration:run` | 🔄 Create database tables |
+| `npm run seed:run` | 🌱 Insert sample data |
+
+</div>
+
+After running these commands, you'll have a `users` table with **5 sample users** 
+(password: `password123`) ready for testing! 🧪
+
+## 🗄️ Database Management
+
+<details>
+<summary><b>🔄 Migration Commands</b></summary>
+
+```bash
+npm run migration:run      # 🚀 Run all pending migrations
+npm run migration:revert   # ⏪ Revert the last migration  
+npm run migration:status   # 📊 Check migration status
+```
+
+</details>
+
+<details>
+<summary><b>🌱 Seeder Commands</b></summary>
+
+```bash
+npm run seed:run          # 🌱 Run all seeders
+npm run seed:revert       # 🗑️ Revert all seeders
+```
+
+</details>
+
+<details>
+<summary><b>👥 Sample Users</b></summary>
+
+After running seeders, you'll have these test users:
+
+| Email | Username | Password |
+|-------|----------|----------|
+| 👑 admin@example.com | `admin` | `password123` |
+| 👨 john.doe@example.com | `johndoe` | `password123` |
+| 👩 jane.doe@example.com | `janedoe` | `password123` |
+| 🧪 test@example.com | `testuser` | `password123` |
+| 👨‍💻 dev@example.com | `developer` | `password123` |
+
+</details>
+
+## 📜 Available Scripts
+
+<div align="center">
+
+### 🚀 Development Scripts
+
+| Script | Description | Usage |
+|--------|-------------|--------|
+| 🏃‍♂️ `start:dev` | Run in development mode with hot-reload | `npm run start:dev` |
+| 🐛 `start:debug` | Run in debug mode | `npm run start:debug` |
+| 🏗️ `build` | Build the application | `npm run build` |
+| 🏭 `start:prod` | Run in production mode | `npm run start:prod` |
+
+### 🧪 Testing & Quality
+
+| Script | Description | Usage |
+|--------|-------------|--------|
+| 🧪 `test` | Run unit tests | `npm test` |
+| 👀 `test:watch` | Run tests in watch mode | `npm run test:watch` |
+| 📊 `test:cov` | Run tests with coverage | `npm run test:cov` |
+| ✨ `lint` | Check code style | `npm run lint` |
+
+</div>
+
+## 🐳 Docker
+
+<div align="center">
+
+```bash
+# 🚀 Start PostgreSQL database
+docker compose up -d postgres
+```
+
+</div>
+
+<details>
+<summary><b>🔧 Docker Configuration</b></summary>
+
+The project includes a `docker-compose.yml` with:
+- 🐘 **PostgreSQL 15-alpine** on port **5433**
+- 📊 **Database**: `base_api_db`
+- 👤 **User**: `admin`
+- 🔐 **Password**: `admin123`
+
+</details>
+
+---
+
+## 🌐 API Endpoints
+
+<div align="center">
+
+### 🏥 Health Check Endpoints
+
+| Method | Endpoint | Description | Response |
+|--------|----------|-------------|----------|
+| 🟢 `GET` | `/health` | General application status | `{ "status": "up" }` |
+| 🏓 `GET` | `/health/ping` | Simple ping response | `"pong"` |
+
+</div>
+
+> 💡 **Tip**: Visit `http://localhost:3000/health` to verify your API is running!
+
+## 🏛️ Hexagonal Architecture
+
+<div align="center">
+
+```
+🎯 Application Layer    💎 Domain Layer    🔧 Infrastructure Layer
+```
+
+</div>
+
+This application follows **Clean Architecture** principles for maintainable and testable code:
+
+<table>
+<tr>
+<td width="33%">
+
+### 💎 Domain (Core)
+**The Heart of the Application**
+
+- 🏛️ **Entities**: Business objects with identity
+- 💎 **Value Objects**: Immutable data objects  
+- 📦 **Repositories**: Persistence interfaces
+- 🔄 **Domain Services**: Business logic
+
+</td>
+<td width="33%">
+
+### 🎯 Application Layer
+**Orchestrates Business Logic**
+
+- 🎭 **Use Cases**: Application workflows
+- 🔌 **Ports**: Interface contracts
+- 📡 **DTOs**: Data transfer objects
+- 🛡️ **Validation**: Input validation
+
+</td>
+<td width="34%">
+
+### 🔧 Infrastructure
+**External World Interface**
+
+- 🎮 **Controllers**: HTTP endpoints
+- 💾 **Repositories**: Data persistence
+- ⚙️ **Configuration**: App settings
+- 📦 **Modules**: Dependency injection
+
+</td>
+</tr>
+</table>
+
+### 🔄 Data Flow
+
+```
+🌐 HTTP Request → 🎮 Controller → 🎭 Use Case → 💎 Domain → 💾 Repository → 🗄️ Database
+```
+
+### ✨ Benefits
+
+- 🧪 **Testable**: Easy to unit test business logic
+- 🔄 **Flexible**: Swap implementations without changing core logic
+- 🛡️ **Maintainable**: Clear separation of concerns
+- 📈 **Scalable**: Add new features without affecting existing code
+
+---
+
+<div align="center">
+
+## 🎉 You're All Set!
+
+**Your NestJS API with Hexagonal Architecture is ready to rock! 🚀**
+
+Need help? Check our comprehensive documentation in `/src/infrastructure/database/README.md`
+
+</div>
 - **Controllers**: REST endpoints
 - **Repositories**: Persistence implementations
 - **Configuration**: Application setup
