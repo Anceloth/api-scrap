@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { User } from '../database/models/user.model';
 import { AuthController } from '../adapters/controllers/auth/auth.controller';
@@ -10,7 +11,10 @@ import { JwtTokenAdapter } from '../adapters/jwt-token.adapter';
 import { USER_REPOSITORY_TOKEN, PASSWORD_HASHER_TOKEN, JWT_TOKEN_TOKEN } from '../tokens/injection.tokens';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User])],
+  imports: [
+    ConfigModule,
+    SequelizeModule.forFeature([User])
+  ],
   controllers: [AuthController],
   providers: [
     RegisterUserUseCase,

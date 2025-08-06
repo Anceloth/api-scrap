@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import * as jwt from 'jsonwebtoken';
 import { JwtTokenPort } from '../../application/ports/jwt-token.port';
 
@@ -7,9 +8,9 @@ export class JwtTokenAdapter implements JwtTokenPort {
   private readonly secret: string;
   private readonly expiresIn: string;
 
-  constructor() {
-    this.secret = process.env.JWT_SECRET || 'your-default-secret-key';
-    this.expiresIn = process.env.JWT_EXPIRES_IN || '24h';
+  constructor(private readonly configService: ConfigService) {
+    this.secret = this.configService.get<string>('app.jwt.secret');
+    this.expiresIn = this.configService.get<string>('app.jwt.expiresIn');
   }
 
   generateToken(payload: { userId: string; email: string }): string {
