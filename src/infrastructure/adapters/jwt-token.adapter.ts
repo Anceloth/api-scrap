@@ -13,7 +13,7 @@ export class JwtTokenAdapter implements JwtTokenPort {
   }
 
   generateToken(payload: { userId: string; email: string }): string {
-    // Usando any para evitar problemas de tipos con la versión específica de @types/jsonwebtoken
+    // Using any to avoid type issues with the specific version of @types/jsonwebtoken
     return jwt.sign(payload, this.secret, { 
       expiresIn: this.expiresIn 
     } as any);

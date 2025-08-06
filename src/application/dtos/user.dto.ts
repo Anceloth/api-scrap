@@ -1,6 +1,14 @@
 import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, Matches } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class RegisterUserDto {
+  @ApiProperty({
+    description: 'Unique username, only letters, numbers and underscores allowed',
+    example: 'testuser',
+    minLength: 3,
+    maxLength: 50,
+    pattern: '^\\w+$'
+  })
   @IsString()
   @IsNotEmpty()
   @MinLength(3)
@@ -10,10 +18,21 @@ export class RegisterUserDto {
   })
   username: string;
 
+  @ApiProperty({
+    description: 'Valid email address',
+    example: 'user@example.com',
+    format: 'email'
+  })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty({
+    description: 'Secure password (minimum 8 characters, at least one lowercase, one uppercase and one number)',
+    example: 'SecurePass123',
+    minLength: 8,
+    maxLength: 100
+  })
   @IsString()
   @IsNotEmpty()
   @MinLength(8)
@@ -25,20 +44,53 @@ export class RegisterUserDto {
 }
 
 export class LoginUserDto {
+  @ApiProperty({
+    description: 'User email address',
+    example: 'user@example.com',
+    format: 'email'
+  })
   @IsEmail()
   @IsNotEmpty()
   email: string;
 
+  @ApiProperty({
+    description: 'User password',
+    example: 'SecurePass123'
+  })
   @IsString()
   @IsNotEmpty()
   password: string;
 }
 
 export class UserResponseDto {
+  @ApiProperty({
+    description: 'Unique user ID',
+    example: '123e4567-e89b-12d3-a456-426614174000'
+  })
   id: string;
+
+  @ApiProperty({
+    description: 'Username',
+    example: 'testuser'
+  })
   username: string;
+
+  @ApiProperty({
+    description: 'Email address',
+    example: 'user@example.com'
+  })
   email: string;
+
+  @ApiProperty({
+    description: 'Account creation date',
+    example: '2025-08-06T22:27:49.401Z'
+  })
   createdAt: Date;
+
+  @ApiProperty({
+    description: 'Last update date',
+    example: '2025-08-06T22:27:49.401Z'
+  })
   updatedAt: Date;
 
   constructor(user: {
@@ -57,7 +109,16 @@ export class UserResponseDto {
 }
 
 export class LoginResponseDto {
+  @ApiProperty({
+    description: 'Authenticated user information',
+    type: UserResponseDto
+  })
   user: UserResponseDto;
+
+  @ApiProperty({
+    description: 'JWT token for authentication',
+    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
+  })
   accessToken: string;
 
   constructor(user: UserResponseDto, accessToken: string) {
