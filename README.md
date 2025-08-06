@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚀 Base API - NestJS Hexagonal Architecture
+# 🚀 API - scrap - NestJS Hexagonal Architecture
 
 <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" alt="NestJS" />
 <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -97,7 +97,7 @@ Perfect starting point for enterprise applications requiring clean architecture 
 ### 1️⃣ Clone & Install
 ```bash
 git clone <repo-url>
-cd base_api
+cd api-scrap
 npm install
 ```
 
