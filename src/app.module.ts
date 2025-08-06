@@ -6,6 +6,8 @@ import appConfig from './infrastructure/config/app.config';
 import { HealthModule } from './infrastructure/modules/health.module';
 import { UserModule } from './infrastructure/modules/user.module';
 import { User } from './infrastructure/database/models/user.model';
+import { Url } from './infrastructure/database/models/url.model';
+import { Link } from './infrastructure/database/models/link.model';
 
 @Module({
   imports: [
@@ -28,7 +30,7 @@ import { User } from './infrastructure/database/models/user.model';
         synchronize: process.env.NODE_ENV === 'development',
         logging: process.env.NODE_ENV === 'development',
         autoLoadModels: true,
-        models: [User], // Models will be added here when we create them
+        models: [User, Url, Link], // Models will be added here when we create them
       }),
     }),
 
