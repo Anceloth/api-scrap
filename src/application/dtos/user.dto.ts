@@ -24,6 +24,16 @@ export class RegisterUserDto {
   password: string;
 }
 
+export class LoginUserDto {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  password: string;
+}
+
 export class UserResponseDto {
   id: string;
   username: string;
@@ -43,5 +53,15 @@ export class UserResponseDto {
     this.email = user.email;
     this.createdAt = user.createdAt;
     this.updatedAt = user.updatedAt;
+  }
+}
+
+export class LoginResponseDto {
+  user: UserResponseDto;
+  accessToken: string;
+
+  constructor(user: UserResponseDto, accessToken: string) {
+    this.user = user;
+    this.accessToken = accessToken;
   }
 }
