@@ -205,10 +205,30 @@ After running seeders, you'll have these test users:
 |--------|-------------|--------|
 | 🧪 `test` | Run unit tests | `npm test` |
 | 👀 `test:watch` | Run tests in watch mode | `npm run test:watch` |
-| 📊 `test:cov` | Run tests with coverage | `npm run test:cov` |
+| 📊 `test:cov:report` | **Combined coverage report (Unit + E2E)** | `npm run test:cov:report` |
+| 🔬 `test:cov` | Coverage with thresholds | `npm run test:cov` |
+| 🌐 `test:e2e` | Run end-to-end tests | `npm run test:e2e` |
 | ✨ `lint` | Check code style | `npm run lint` |
 
 </div>
+
+---
+
+## 🧪 Testing
+
+```bash
+# Run all tests with coverage report
+npm run test:cov:report
+
+# Run only unit tests  
+npm test
+
+# Run only E2E tests
+npm run test:e2e
+
+# Watch mode for development
+npm run test:watch
+```
 
 ## 🐳 Docker
 
