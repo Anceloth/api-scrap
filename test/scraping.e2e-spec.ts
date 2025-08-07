@@ -9,6 +9,7 @@ import { URL_REPOSITORY_TOKEN, LINK_REPOSITORY_TOKEN, WEB_SCRAPING_TOKEN } from 
 describe('Scraping Controller (e2e)', () => {
   let app: INestApplication;
   let scrapeUrlUseCase: jest.Mocked<ScrapeUrlUseCase>;
+  let getUrlsUseCase: jest.Mocked<GetUrlsUseCase>;
 
   beforeAll(async () => {
     // Create mocked use case
@@ -66,6 +67,9 @@ describe('Scraping Controller (e2e)', () => {
   beforeEach(() => {
     // Clear all mocks before each test
     jest.clearAllMocks();
+    
+    // Get fresh reference to the mocked use case for each test
+    getUrlsUseCase = app.get(GetUrlsUseCase);
   });
 
   describe('POST /scraping/scrape-url', () => {
@@ -125,6 +129,184 @@ describe('Scraping Controller (e2e)', () => {
 
       // Use case should not be called for invalid input
       expect(scrapeUrlUseCase.execute).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('GET /scraping/urls', () => {
+    it('should return paginated URLs with default pagination when no query params provided', async () => {
+      // Arrange
+      const mockResult = {
+        urls: [
+          {
+            id: 'url-1',
+            name: 'Google',
+            url: 'https://google.com',
+            linksCount: 15,
+            createdAt: new Date('2025-08-07T10:00:00Z'),
+            updatedAt: new Date('2025-08-07T10:00:00Z'),
+          },
+          {
+            id: 'url-2',
+            name: 'GitHub',
+            url: 'https://github.com',
+            linksCount: 28,
+            createdAt: new Date('2025-08-07T09:00:00Z'),
+            updatedAt: new Date('2025-08-07T09:00:00Z'),
+          },
+        ],
+        pagination: {
+          currentPage: 1,
+          totalPages: 2,
+          totalItems: 10,
+          itemsPerPage: 5,
+          hasNextPage: true,
+          hasPreviousPage: false,
+        },
+      };
+
+      getUrlsUseCase.execute.mockResolvedValue(mockResult);
+
+      // Act & Assert
+      const response = await request(app.getHttpServer())
+        .get('/scraping/urls')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message', 'URLs retrieved successfully');
+      expect(response.body).toHaveProperty('data');
+      
+      // Compare URLs with string dates (as they are serialized in JSON)
+      const expectedUrls = [
+        {
+          id: 'url-1',
+          name: 'Google',
+          url: 'https://google.com',
+          linksCount: 15,
+          createdAt: '2025-08-07T10:00:00.000Z',
+          updatedAt: '2025-08-07T10:00:00.000Z',
+        },
+        {
+          id: 'url-2',
+          name: 'GitHub',
+          url: 'https://github.com',
+          linksCount: 28,
+          createdAt: '2025-08-07T09:00:00.000Z',
+          updatedAt: '2025-08-07T09:00:00.000Z',
+        },
+      ];
+      
+      expect(response.body.data.urls).toEqual(expectedUrls);
+      expect(response.body.data.pagination).toEqual(mockResult.pagination);
+      
+      // Should be called with default values (page=1, limit=5)
+      expect(getUrlsUseCase.execute).toHaveBeenCalledWith({ page: 1, limit: 5 });
+    });
+
+    it('should return paginated URLs with custom pagination parameters', async () => {
+      // Arrange
+      const mockResult = {
+        urls: [
+          {
+            id: 'url-3',
+            name: 'Stack Overflow',
+            url: 'https://stackoverflow.com',
+            linksCount: 42,
+            createdAt: new Date('2025-08-07T08:00:00Z'),
+            updatedAt: new Date('2025-08-07T08:00:00Z'),
+          },
+        ],
+        pagination: {
+          currentPage: 2,
+          totalPages: 3,
+          totalItems: 25,
+          itemsPerPage: 10,
+          hasNextPage: true,
+          hasPreviousPage: true,
+        },
+      };
+
+      getUrlsUseCase.execute.mockResolvedValue(mockResult);
+
+      // Act & Assert
+      const response = await request(app.getHttpServer())
+        .get('/scraping/urls')
+        .query({ page: 2, limit: 10 })
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message', 'URLs retrieved successfully');
+      expect(response.body).toHaveProperty('data');
+      
+      // Compare URLs with string dates (as they are serialized in JSON)
+      const expectedUrls = [
+        {
+          id: 'url-3',
+          name: 'Stack Overflow',
+          url: 'https://stackoverflow.com',
+          linksCount: 42,
+          createdAt: '2025-08-07T08:00:00.000Z',
+          updatedAt: '2025-08-07T08:00:00.000Z',
+        },
+      ];
+      
+      expect(response.body.data.urls).toEqual(expectedUrls);
+      expect(response.body.data.pagination).toEqual(mockResult.pagination);
+      
+      // Should be called with provided query parameters
+      expect(getUrlsUseCase.execute).toHaveBeenCalledWith({ page: 2, limit: 10 });
+    });
+
+    it('should handle invalid pagination parameters and return validation errors', async () => {
+      // Test with invalid page (negative number)
+      let response = await request(app.getHttpServer())
+        .get('/scraping/urls')
+        .query({ page: -1, limit: 5 })
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body).toHaveProperty('error', 'Bad Request');
+      expect(response.body).toHaveProperty('statusCode', 400);
+
+      // Test with invalid limit (too high)
+      response = await request(app.getHttpServer())
+        .get('/scraping/urls')
+        .query({ page: 1, limit: 101 })
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body).toHaveProperty('error', 'Bad Request');
+      expect(response.body).toHaveProperty('statusCode', 400);
+
+      // Use case should not be called for invalid input
+      expect(getUrlsUseCase.execute).not.toHaveBeenCalled();
+    });
+
+    it('should return empty result when no URLs exist', async () => {
+      // Arrange
+      const mockResult = {
+        urls: [],
+        pagination: {
+          currentPage: 1,
+          totalPages: 0,
+          totalItems: 0,
+          itemsPerPage: 5,
+          hasNextPage: false,
+          hasPreviousPage: false,
+        },
+      };
+
+      getUrlsUseCase.execute.mockResolvedValue(mockResult);
+
+      // Act & Assert
+      const response = await request(app.getHttpServer())
+        .get('/scraping/urls')
+        .expect(200);
+
+      expect(response.body).toHaveProperty('message', 'URLs retrieved successfully');
+      expect(response.body).toHaveProperty('data');
+      expect(response.body.data.urls).toEqual([]);
+      expect(response.body.data.pagination.totalItems).toBe(0);
+      expect(response.body.data.pagination.totalPages).toBe(0);
+      
+      expect(getUrlsUseCase.execute).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
 });
