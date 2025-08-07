@@ -5,6 +5,7 @@ import { Url } from '../database/models/url.model';
 import { Link } from '../database/models/link.model';
 import { ScrapingController } from '../adapters/controllers/scraping/scraping.controller';
 import { ScrapeUrlUseCase } from '../../application/use-cases/scrape-url.use-case';
+import { GetUrlsUseCase } from '../../application/use-cases/get-urls.use-case';
 import { SequelizeUrlRepository } from '../adapters/repositories/sequelize-url.repository';
 import { SequelizeLinkRepository } from '../adapters/repositories/sequelize-link.repository';
 import { CheerioWebScrapingAdapter } from '../adapters/cheerio-web-scraping.adapter';
@@ -22,6 +23,7 @@ import {
   controllers: [ScrapingController],
   providers: [
     ScrapeUrlUseCase,
+    GetUrlsUseCase,
     {
       provide: URL_REPOSITORY_TOKEN,
       useClass: SequelizeUrlRepository,
@@ -35,6 +37,6 @@ import {
       useClass: CheerioWebScrapingAdapter,
     },
   ],
-  exports: [ScrapeUrlUseCase],
+  exports: [ScrapeUrlUseCase, GetUrlsUseCase],
 })
 export class ScrapingModule {}

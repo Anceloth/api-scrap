@@ -3,6 +3,7 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as request from 'supertest';
 import { ScrapingController } from '../src/infrastructure/adapters/controllers/scraping/scraping.controller';
 import { ScrapeUrlUseCase } from '../src/application/use-cases/scrape-url.use-case';
+import { GetUrlsUseCase } from '../src/application/use-cases/get-urls.use-case';
 import { URL_REPOSITORY_TOKEN, LINK_REPOSITORY_TOKEN, WEB_SCRAPING_TOKEN } from '../src/infrastructure/tokens/injection.tokens';
 
 describe('Scraping Controller (e2e)', () => {
@@ -15,12 +16,20 @@ describe('Scraping Controller (e2e)', () => {
       execute: jest.fn(),
     };
 
+    const mockGetUrlsUseCase = {
+      execute: jest.fn(),
+    };
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [ScrapingController],
       providers: [
         {
           provide: ScrapeUrlUseCase,
           useValue: mockScrapeUrlUseCase,
+        },
+        {
+          provide: GetUrlsUseCase,
+          useValue: mockGetUrlsUseCase,
         },
         {
           provide: URL_REPOSITORY_TOKEN,

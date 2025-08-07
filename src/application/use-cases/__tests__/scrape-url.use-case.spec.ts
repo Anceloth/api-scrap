@@ -15,6 +15,7 @@ describe('ScrapeUrlUseCase', () => {
     urlRepository = {
       create: jest.fn(),
       findByUrl: jest.fn(),
+      findAllWithLinksCount: jest.fn(),
     };
 
     linkRepository = {
