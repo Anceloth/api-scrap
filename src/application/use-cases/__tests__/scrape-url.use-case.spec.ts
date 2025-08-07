@@ -21,6 +21,7 @@ describe('ScrapeUrlUseCase', () => {
     linkRepository = {
       createMany: jest.fn(),
       deleteByUrlId: jest.fn(),
+      findByUrl: jest.fn(),
     };
 
     webScrapingAdapter = {

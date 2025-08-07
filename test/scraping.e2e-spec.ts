@@ -4,6 +4,7 @@ import * as request from 'supertest';
 import { ScrapingController } from '../src/infrastructure/adapters/controllers/scraping/scraping.controller';
 import { ScrapeUrlUseCase } from '../src/application/use-cases/scrape-url.use-case';
 import { GetUrlsUseCase } from '../src/application/use-cases/get-urls.use-case';
+import { GetLinksUseCase } from '../src/application/use-cases/get-links.use-case';
 import { URL_REPOSITORY_TOKEN, LINK_REPOSITORY_TOKEN, WEB_SCRAPING_TOKEN } from '../src/infrastructure/tokens/injection.tokens';
 
 describe('Scraping Controller (e2e)', () => {
@@ -21,6 +22,10 @@ describe('Scraping Controller (e2e)', () => {
       execute: jest.fn(),
     };
 
+    const mockGetLinksUseCase = {
+      execute: jest.fn(),
+    };
+
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [ScrapingController],
       providers: [
@@ -31,6 +36,10 @@ describe('Scraping Controller (e2e)', () => {
         {
           provide: GetUrlsUseCase,
           useValue: mockGetUrlsUseCase,
+        },
+        {
+          provide: GetLinksUseCase,
+          useValue: mockGetLinksUseCase,
         },
         {
           provide: URL_REPOSITORY_TOKEN,
