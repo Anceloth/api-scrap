@@ -1,4 +1,4 @@
-// Tipos comunes utilizados en toda la aplicación
+// Common types used throughout the application
 export type ID = string;
 
 export interface Timestamps {

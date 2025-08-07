@@ -1,4 +1,4 @@
-// Excepciones personalizadas para la aplicación
+// Custom exceptions for the application
 export class DomainException extends Error {
   constructor(message: string) {
     super(message);
