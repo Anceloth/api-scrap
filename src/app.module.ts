@@ -5,6 +5,7 @@ import databaseConfig from './infrastructure/config/database.config';
 import appConfig from './infrastructure/config/app.config';
 import { HealthModule } from './infrastructure/modules/health.module';
 import { UserModule } from './infrastructure/modules/user.module';
+import { ScrapingModule } from './infrastructure/modules/scraping.module';
 import { User } from './infrastructure/database/models/user.model';
 import { Url } from './infrastructure/database/models/url.model';
 import { Link } from './infrastructure/database/models/link.model';
@@ -37,6 +38,7 @@ import { Link } from './infrastructure/database/models/link.model';
     // Application modules
     HealthModule,
     UserModule,
+    ScrapingModule,
   ],
   controllers: [],
   providers: [],
