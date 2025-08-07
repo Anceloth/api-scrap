@@ -59,7 +59,6 @@ Perfect starting point for enterprise applications requiring clean architecture 
 
 **🔒 Production Ready**
 - ✅ **Environment Variables** - Flexible config
-- ✅ **Health Checks** - Monitor endpoints
 - ✅ **Database Migrations** - Schema management
 - ✅ **Sample Data** - Ready to test
 
@@ -258,16 +257,22 @@ The project includes a `docker-compose.yml` with:
 
 <div align="center">
 
-### 🏥 Health Check Endpoints
+### 🔐 Authentication Endpoints
 
 | Method | Endpoint | Description | Response |
 |--------|----------|-------------|----------|
-| 🟢 `GET` | `/health` | General application status | `{ "status": "up" }` |
-| 🏓 `GET` | `/health/ping` | Simple ping response | `"pong"` |
+| � `POST` | `/auth/register` | User registration | User data + JWT token |
+| 🔑 `POST` | `/auth/login` | User authentication | JWT token |
+
+### 🕷️ Web Scraping Endpoints
+
+| Method | Endpoint | Description | Response |
+|--------|----------|-------------|----------|
+| 🔍 `POST` | `/scraping/scrape-url` | Scrape links from URL | Extracted links data |
+| � `GET` | `/scraping/urls` | Get paginated URLs list | URLs with links count |
+| 🔗 `GET` | `/scraping/links` | Get paginated links by URL | Links from specific URL |
 
 </div>
-
-> 💡 **Tip**: Visit `http://localhost:3000/health` to verify your API is running!
 
 ## 🏛️ Hexagonal Architecture
 
