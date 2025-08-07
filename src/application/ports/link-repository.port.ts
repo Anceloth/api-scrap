@@ -13,4 +13,20 @@ export interface LinkRepository {
   }>>;
   
   deleteByUrlId(urlId: string): Promise<void>;
+
+  findByUrl(options: {
+    url: string;
+    page: number;
+    limit: number;
+  }): Promise<{
+    links: Array<{
+      id: string;
+      urlId: string;
+      link: string;
+      name: string;
+      createdAt: Date;
+      updatedAt: Date;
+    }>;
+    total: number;
+  }>;
 }

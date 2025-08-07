@@ -338,7 +338,7 @@ This application follows **Clean Architecture** principles for maintainable and 
 
 ## 🎉 You're All Set!
 
-**Your NestJS API with Hexagonal Architecture is ready to rock! 🚀**
+**Need help for DataBase? 🚀**
 
 Need help? Check our comprehensive documentation in `/src/infrastructure/database/README.md`
 
