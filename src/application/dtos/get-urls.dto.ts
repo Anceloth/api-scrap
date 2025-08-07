@@ -1,21 +1,9 @@
-import { IsOptional, IsInt, Min, Max } from 'class-validator';
-import { Transform } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
+import { PaginationQueryDto, PaginationMetadataDto } from '../../shared/dtos/pagination.dto';
 
-export class GetUrlsDto {
-  @ApiProperty({
-    description: 'Page number (starts from 1)',
-    example: 1,
-    required: false,
-    default: 1,
-    minimum: 1
-  })
-  @IsOptional()
-  @Transform(({ value }) => parseInt(value))
-  @IsInt({ message: 'Page must be an integer' })
-  @Min(1, { message: 'Page must be at least 1' })
-  page?: number = 1;
-
+export class GetUrlsDto extends PaginationQueryDto {
+  // Inherits page and limit from PaginationQueryDto
+  // But we can override the default limit value if needed
   @ApiProperty({
     description: 'Number of items per page',
     example: 5,
@@ -24,12 +12,7 @@ export class GetUrlsDto {
     minimum: 1,
     maximum: 100
   })
-  @IsOptional()
-  @Transform(({ value }) => parseInt(value))
-  @IsInt({ message: 'Limit must be an integer' })
-  @Min(1, { message: 'Limit must be at least 1' })
-  @Max(100, { message: 'Limit cannot be more than 100' })
-  limit?: number = 5;
+  limit?: number = 5; // Overrides the default for URLs
 }
 
 export class UrlWithLinksCountDto {
@@ -70,26 +53,7 @@ export class UrlWithLinksCountDto {
   updatedAt: Date;
 }
 
-export class PaginationMetadataDto {
-  @ApiProperty({ description: 'Current page number', example: 1 })
-  currentPage: number;
-
-  @ApiProperty({ description: 'Total number of pages', example: 3 })
-  totalPages: number;
-
-  @ApiProperty({ description: 'Total number of URLs', example: 15 })
-  totalItems: number;
-
-  @ApiProperty({ description: 'Number of items per page', example: 5 })
-  itemsPerPage: number;
-
-  @ApiProperty({ description: 'Whether there is a next page', example: true })
-  hasNextPage: boolean;
-
-  @ApiProperty({ description: 'Whether there is a previous page', example: false })
-  hasPreviousPage: boolean;
-}
-
+// Maintains the current structure for compatibility
 export class PaginatedUrlsResponseDto {
   @ApiProperty({
     description: 'List of URLs with their link counts',

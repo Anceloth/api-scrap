@@ -1,61 +1,58 @@
-import { IsNotEmpty, IsString, IsOptional, IsInt, Min, Max, IsUrl } from 'class-validator';
-import { Transform } from 'class-transformer';
+import { IsNotEmpty, IsUrl } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { PaginationQueryDto, PaginationMetadataDto } from '../../shared/dtos/pagination.dto';
 
-export class GetLinksQueryDto {
+export class GetLinksQueryDto extends PaginationQueryDto {
+  @ApiProperty({
+    description: 'The URL to get links for',
+    example: 'https://www.w3schools.com'
+  })
   @IsNotEmpty()
   @IsUrl({}, { message: 'url must be a valid URL address' })
   url: string;
 
-  @IsOptional()
-  @Transform(({ value }) => parseInt(value))
-  @IsInt()
-  @Min(1)
-  page?: number = 1;
-
-  @IsOptional()
-  @Transform(({ value }) => parseInt(value))
-  @IsInt()
-  @Min(1)
-  @Max(100)
-  limit?: number = 10;
+  // page y limit se heredan de PaginationQueryDto
 }
 
 export class GetLinksDto {
   @IsNotEmpty()
-  @IsString()
   url: string;
 
-  @IsOptional()
-  @IsInt()
-  @Min(1)
   page?: number = 1;
-
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(100)
   limit?: number = 10;
 }
 
 export class LinkResponseDto {
+  @ApiProperty({ description: 'Unique identifier of the link' })
   id: string;
+
+  @ApiProperty({ description: 'ID of the URL this link belongs to' })
   urlId: string;
+
+  @ApiProperty({ description: 'The actual link URL' })
   link: string;
+
+  @ApiProperty({ description: 'Display name/text of the link' })
   name: string;
+
+  @ApiProperty({ description: 'Date when the link was created' })
   createdAt: Date;
+
+  @ApiProperty({ description: 'Date when the link was last updated' })
   updatedAt: Date;
 }
 
-export class PaginationMetadataDto {
-  currentPage: number;
-  totalPages: number;
-  totalItems: number;
-  itemsPerPage: number;
-  hasNextPage: boolean;
-  hasPreviousPage: boolean;
-}
-
+// Mantiene la estructura actual para compatibilidad
 export class GetLinksResponseDto {
+  @ApiProperty({
+    description: 'List of links for the URL',
+    type: [LinkResponseDto]
+  })
   links: LinkResponseDto[];
+
+  @ApiProperty({
+    description: 'Pagination metadata',
+    type: PaginationMetadataDto
+  })
   pagination: PaginationMetadataDto;
 }
