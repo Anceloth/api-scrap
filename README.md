@@ -274,6 +274,37 @@ The project includes a `docker-compose.yml` with:
 
 </div>
 
+## 📁 API Collections
+
+<div align="center">
+
+**🚀 Ready-to-use API collections for testing all endpoints**
+
+| Tool | Collection File | Environment File |
+|------|----------------|------------------|
+| 🟠 **Postman** | `collections/API-Scrap.postman_collection.json` | `collections/API-Scrap.postman_environment.json` |
+| 🟣 **Insomnia** | `collections/API-Scrap.insomnia_collection.json` | Environment included |
+
+</div>
+
+### ⚡ Quick Import
+
+```bash
+# For Postman users
+1. Import: collections/API-Scrap.postman_collection.json
+2. Import: collections/API-Scrap.postman_environment.json  
+3. Select environment and start testing! 🚀
+
+# For Insomnia users  
+1. Import: collections/API-Scrap.insomnia_collection.json
+2. Update base_url if needed
+3. Login to get token and start testing! 🚀
+```
+
+> 📋 **Full instructions**: Check `/collections/README.md` for detailed setup guide
+
+---
+
 ## 🏛️ Hexagonal Architecture
 
 <div align="center">

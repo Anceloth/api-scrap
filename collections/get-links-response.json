@@ -1,0 +1,23 @@
+{
+    "message": "Links retrieved successfully",
+    "data": {
+        "links": [
+            {
+                "id": "8fb6fede-d724-4ea8-9b41-909aa402999f",
+                "urlId": "537ce468-e820-46f3-a518-f78381bd80d3",
+                "link": "https://www.google.com/search?q=nestjs",
+                "name": "NestJS Search",
+                "createdAt": "2025-08-07T17:12:07.691Z",
+                "updatedAt": "2025-08-07T17:12:07.691Z"
+            }
+        ],
+        "pagination": {
+            "currentPage": 1,
+            "totalPages": 1,
+            "totalItems": 2,
+            "itemsPerPage": 10,
+            "hasNextPage": false,
+            "hasPreviousPage": false
+        }
+    }
+}

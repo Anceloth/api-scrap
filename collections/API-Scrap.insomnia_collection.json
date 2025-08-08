@@ -1,0 +1,318 @@
+{
+	"_type": "export",
+	"__export_format": 4,
+	"__export_date": "2025-08-07T11:30:00.000Z",
+	"__export_source": "insomnia.desktop.app:v2023.5.8",
+	"resources": [
+		{
+			"_id": "req_group_auth",
+			"_type": "request_group",
+			"parentId": "wrk_api_scrap",
+			"modified": 1691411400000,
+			"created": 1691411400000,
+			"name": "🔐 Authentication",
+			"description": "User authentication endpoints for registration and login.",
+			"environment": {},
+			"environmentPropertyOrder": null,
+			"metaSortKey": -1691411400000
+		},
+		{
+			"_id": "req_group_scraping",
+			"_type": "request_group",
+			"parentId": "wrk_api_scrap",
+			"modified": 1691411500000,
+			"created": 1691411500000,
+			"name": "🕷️ Web Scraping",
+			"description": "Web scraping functionality endpoints for extracting and managing links from URLs.",
+			"environment": {},
+			"environmentPropertyOrder": null,
+			"metaSortKey": -1691411500000
+		},
+		{
+			"_id": "req_register",
+			"_type": "request",
+			"parentId": "req_group_auth",
+			"modified": 1691411410000,
+			"created": 1691411410000,
+			"url": "{{ _.base_url }}/auth/register",
+			"name": "📝 Register User",
+			"description": "Register a new user account. Returns user data and JWT token.",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"username\": \"newuser\",\n  \"email\": \"newuser@example.com\",\n  \"password\": \"password123\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411410000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_login",
+			"_type": "request",
+			"parentId": "req_group_auth",
+			"modified": 1691411420000,
+			"created": 1691411420000,
+			"url": "{{ _.base_url }}/auth/login",
+			"name": "🔑 Login User",
+			"description": "Authenticate user with email and password. Returns JWT token.",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411420000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_scrape_url",
+			"_type": "request",
+			"parentId": "req_group_scraping",
+			"modified": 1691411510000,
+			"created": 1691411510000,
+			"url": "{{ _.base_url }}/scraping/scrape-url",
+			"name": "🔍 Scrape URL",
+			"description": "Scrape all links from a given URL. Extracts and stores link data in the database.",
+			"method": "POST",
+			"body": {
+				"mimeType": "application/json",
+				"text": "{\n  \"url\": \"https://www.w3schools.com\"\n}"
+			},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Content-Type",
+					"value": "application/json"
+				},
+				{
+					"name": "Authorization",
+					"value": "Bearer {{ _.token }}"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411510000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_get_urls_default",
+			"_type": "request",
+			"parentId": "req_group_scraping",
+			"modified": 1691411520000,
+			"created": 1691411520000,
+			"url": "{{ _.base_url }}/scraping/urls",
+			"name": "📋 Get URLs (Default Pagination)",
+			"description": "Get paginated list of scraped URLs with default pagination (page=1, limit=5).",
+			"method": "GET",
+			"body": {},
+			"parameters": [],
+			"headers": [
+				{
+					"name": "Authorization",
+					"value": "Bearer {{ _.token }}"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411520000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_get_urls_custom",
+			"_type": "request",
+			"parentId": "req_group_scraping",
+			"modified": 1691411530000,
+			"created": 1691411530000,
+			"url": "{{ _.base_url }}/scraping/urls",
+			"name": "📋 Get URLs (Custom Pagination)",
+			"description": "Get paginated list of scraped URLs with custom pagination parameters.",
+			"method": "GET",
+			"body": {},
+			"parameters": [
+				{
+					"name": "page",
+					"value": "2"
+				},
+				{
+					"name": "limit",
+					"value": "3"
+				}
+			],
+			"headers": [
+				{
+					"name": "Authorization",
+					"value": "Bearer {{ _.token }}"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411530000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_get_links_default",
+			"_type": "request",
+			"parentId": "req_group_scraping",
+			"modified": 1691411540000,
+			"created": 1691411540000,
+			"url": "{{ _.base_url }}/scraping/links",
+			"name": "🔗 Get Links by URL (Default)",
+			"description": "Get paginated links from a specific URL with default pagination (limit=10).",
+			"method": "GET",
+			"body": {},
+			"parameters": [
+				{
+					"name": "url",
+					"value": "https://www.w3schools.com"
+				}
+			],
+			"headers": [
+				{
+					"name": "Authorization",
+					"value": "Bearer {{ _.token }}"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411540000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "req_get_links_custom",
+			"_type": "request",
+			"parentId": "req_group_scraping",
+			"modified": 1691411550000,
+			"created": 1691411550000,
+			"url": "{{ _.base_url }}/scraping/links",
+			"name": "🔗 Get Links by URL (Custom Pagination)",
+			"description": "Get paginated links from a specific URL with custom pagination parameters.",
+			"method": "GET",
+			"body": {},
+			"parameters": [
+				{
+					"name": "url",
+					"value": "https://www.w3schools.com"
+				},
+				{
+					"name": "page",
+					"value": "2"
+				},
+				{
+					"name": "limit",
+					"value": "5"
+				}
+			],
+			"headers": [
+				{
+					"name": "Authorization",
+					"value": "Bearer {{ _.token }}"
+				}
+			],
+			"authentication": {},
+			"metaSortKey": -1691411550000,
+			"isPrivate": false,
+			"settingStoreCookies": true,
+			"settingSendCookies": true,
+			"settingDisableRenderRequestBody": false,
+			"settingEncodeUrl": true,
+			"settingRebuildPath": true,
+			"settingFollowRedirects": "global"
+		},
+		{
+			"_id": "env_base",
+			"_type": "environment",
+			"parentId": "wrk_api_scrap",
+			"modified": 1691411300000,
+			"created": 1691411300000,
+			"name": "Base Environment",
+			"data": {
+				"base_url": "http://localhost:3000",
+				"token": ""
+			},
+			"dataPropertyOrder": {
+				"&": [
+					"base_url",
+					"token"
+				]
+			},
+			"color": "#7d69cb",
+			"isPrivate": false,
+			"metaSortKey": 1691411300000
+		},
+		{
+			"_id": "jar_cookies",
+			"_type": "cookie_jar",
+			"parentId": "wrk_api_scrap",
+			"modified": 1691411300000,
+			"created": 1691411300000,
+			"name": "Default Jar",
+			"cookies": []
+		},
+		{
+			"_id": "spc_workspace",
+			"_type": "api_spec",
+			"parentId": "wrk_api_scrap",
+			"modified": 1691411600000,
+			"created": 1691411600000,
+			"fileName": "API-Scrap",
+			"contents": "",
+			"contentType": "yaml"
+		},
+		{
+			"_id": "wrk_api_scrap",
+			"_type": "workspace",
+			"parentId": null,
+			"modified": 1691411200000,
+			"created": 1691411200000,
+			"name": "🚀 API-Scrap - NestJS Hexagonal Architecture",
+			"description": "Complete REST API collection for web scraping and authentication functionality built with NestJS, TypeScript, and PostgreSQL.\n\n## 🔗 Base URL\nLocal: `http://localhost:3000`\n\n## 🔐 Authentication\nMost endpoints require JWT token in Authorization header: `Bearer {{token}}`",
+			"scope": "collection"
+		}
+	]
+}

@@ -1,0 +1,23 @@
+{
+    "message": "URLs retrieved successfully",
+    "data": {
+        "urls": [
+            {
+                "id": "537ce468-e820-46f3-a518-f78381bd80d3",
+                "name": "Google Search",
+                "url": "https://www.google.com",
+                "linksCount": 2,
+                "createdAt": "2025-08-07T17:12:07.691Z",
+                "updatedAt": "2025-08-07T17:12:07.691Z"
+            }
+        ],
+        "pagination": {
+            "currentPage": 1,
+            "totalPages": 1,
+            "totalItems": 3,
+            "itemsPerPage": 5,
+            "hasNextPage": false,
+            "hasPreviousPage": false
+        }
+    }
+}
